@@ -1,0 +1,155 @@
+[
+  {
+    "colorId": "2",
+    "created": "2023-04-12T05:03:58.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "end": {
+      "dateTime": "2023-04-17T18:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3362551732975000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=ZXU0OGNuaGpja2U0NzR2anZzNmtpYjQ3NGdfMjAyMzA0MTdUMDIwMDAwWiB5dXNlaTgxNzFAbQ",
+    "iCalUID": "eu48cnhjcke474vjvs6kib474g@google.com",
+    "id": "eu48cnhjcke474vjvs6kib474g",
+    "kind": "calendar#event",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "recurrence": ["RRULE:FREQ=WEEKLY"],
+    "reminders": { "useDefault": false },
+    "sequence": 1,
+    "start": {
+      "dateTime": "2023-04-17T11:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "インターン",
+    "updated": "2023-04-12T05:04:54.601Z"
+  },
+  {
+    "colorId": "2",
+    "created": "2023-04-12T05:04:25.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "end": {
+      "dateTime": "2023-04-18T18:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3362551774784000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Mm50YXN1Z3JoZnE4dnM1YWw3czZvZDl0azBfMjAyMzA0MThUMDIwMDAwWiB5dXNlaTgxNzFAbQ",
+    "iCalUID": "2ntasugrhfq8vs5al7s6od9tk0@google.com",
+    "id": "2ntasugrhfq8vs5al7s6od9tk0",
+    "kind": "calendar#event",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "recurrence": ["RRULE:FREQ=WEEKLY"],
+    "reminders": { "useDefault": false },
+    "sequence": 1,
+    "start": {
+      "dateTime": "2023-04-18T11:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "インターン",
+    "updated": "2023-04-12T05:05:09.256Z"
+  },
+  {
+    "colorId": "11",
+    "created": "2023-06-06T10:27:59.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "end": {
+      "dateTime": "2023-06-07T14:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3372094581214000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dWN0bGZlbTFscGJnM2o4aG04NThlajlkZW8geXVzZWk4MTcxQG0",
+    "iCalUID": "uctlfem1lpbg3j8hm858ej9deo@google.com",
+    "id": "uctlfem1lpbg3j8hm858ej9deo",
+    "kind": "calendar#event",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "reminders": { "useDefault": true },
+    "sequence": 1,
+    "start": {
+      "dateTime": "2023-06-07T13:30:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "南さんと電話",
+    "updated": "2023-06-06T10:28:10.607Z"
+  },
+  {
+    "colorId": "11",
+    "created": "2023-06-07T03:20:08.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "end": {
+      "dateTime": "2023-06-28T20:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3372216016604000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NjAzMTE5bHRhbWd2cTV1OTBjbWJjZmMzYmcgeXVzZWk4MTcxQG0",
+    "iCalUID": "603119ltamgvq5u90cmbcfc3bg@google.com",
+    "id": "603119ltamgvq5u90cmbcfc3bg",
+    "kind": "calendar#event",
+    "location": "https://wingarc.zoom.us/j/85248849438?pwd=bDVCZjB1M1JtbEV2c3BnMU9wbVl0UT09&from=addon",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "reminders": { "useDefault": true },
+    "sequence": 0,
+    "start": {
+      "dateTime": "2023-06-28T19:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "内定者バイト説明会",
+    "updated": "2023-06-07T03:20:08.302Z"
+  },
+  {
+    "created": "2023-06-10T03:58:23.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "end": {
+      "dateTime": "2023-06-15T13:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3372739007344000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dnR0am5iaTF2MzRtcXJzN2diZHE0bThwM2MgeXVzZWk4MTcxQG0",
+    "iCalUID": "vttjnbi1v34mqrs7gbdq4m8p3c@google.com",
+    "id": "vttjnbi1v34mqrs7gbdq4m8p3c",
+    "kind": "calendar#event",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "reminders": { "useDefault": true },
+    "sequence": 0,
+    "start": {
+      "dateTime": "2023-06-15T12:00:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "美容院",
+    "updated": "2023-06-10T03:58:23.672Z"
+  },
+  {
+    "created": "2023-06-12T02:57:14.000Z",
+    "creator": { "email": "yusei8171@gmail.com", "self": true },
+    "description": "メモです",
+    "end": {
+      "dateTime": "2023-06-17T20:20:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "etag": "\"3373130534676000\"",
+    "eventType": "default",
+    "htmlLink": "https://www.google.com/calendar/event?eid=ZWs4bnJtdThoYTlyM3JyOWYwb2hlcW11ZmtfMjAyMzA2MTdUMTAyMDAwWiB5dXNlaTgxNzFAbQ",
+    "iCalUID": "ek8nrmu8ha9r3rr9f0oheqmufk@google.com",
+    "id": "ek8nrmu8ha9r3rr9f0oheqmufk",
+    "kind": "calendar#event",
+    "organizer": { "email": "yusei8171@gmail.com", "self": true },
+    "recurrence": ["RRULE:FREQ=MONTHLY;UNTIL=20230801T145959Z;BYDAY=3SA"],
+    "reminders": { "useDefault": false },
+    "sequence": 3,
+    "start": {
+      "dateTime": "2023-06-17T19:20:00+09:00",
+      "timeZone": "Asia/Tokyo"
+    },
+    "status": "confirmed",
+    "summary": "テスト",
+    "updated": "2023-06-12T10:20:15.899Z"
+  }
+]
