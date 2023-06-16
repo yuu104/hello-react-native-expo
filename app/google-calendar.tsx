@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import ENV from "../environments";
@@ -48,7 +48,7 @@ export default function App() {
   }, [response, token]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!token ? (
         <Button
           title="Sign in with Google"
@@ -74,7 +74,7 @@ export default function App() {
       <Link href="/home" style={styles.link}>
         Homeに戻る
       </Link>
-    </View>
+    </SafeAreaView>
   );
 }
 

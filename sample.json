@@ -134,22 +134,22 @@
       "dateTime": "2023-06-17T20:20:00+09:00",
       "timeZone": "Asia/Tokyo"
     },
-    "etag": "\"3373130534676000\"",
+    "etag": "\"3373213797489000\"",
     "eventType": "default",
     "htmlLink": "https://www.google.com/calendar/event?eid=ZWs4bnJtdThoYTlyM3JyOWYwb2hlcW11ZmtfMjAyMzA2MTdUMTAyMDAwWiB5dXNlaTgxNzFAbQ",
     "iCalUID": "ek8nrmu8ha9r3rr9f0oheqmufk@google.com",
     "id": "ek8nrmu8ha9r3rr9f0oheqmufk",
     "kind": "calendar#event",
     "organizer": { "email": "yusei8171@gmail.com", "self": true },
-    "recurrence": ["RRULE:FREQ=MONTHLY;UNTIL=20230801T145959Z;BYDAY=3SA"],
+    "recurrence": ["RRULE:FREQ=MONTHLY;COUNT=3;BYDAY=3SA"],
     "reminders": { "useDefault": false },
-    "sequence": 3,
+    "sequence": 4,
     "start": {
       "dateTime": "2023-06-17T19:20:00+09:00",
       "timeZone": "Asia/Tokyo"
     },
     "status": "confirmed",
     "summary": "テスト",
-    "updated": "2023-06-12T10:20:15.899Z"
+    "updated": "2023-06-13T09:27:58.712Z"
   }
 ]
