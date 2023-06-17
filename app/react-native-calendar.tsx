@@ -49,16 +49,44 @@ const DayComponent: ComponentType<
   const day = date.day;
 
   const events = mockData.filter((data) => {
+    if (data.id === "ek8nrmu8ha9r3rr9f0oheqmufp") {
+      console.log(data.start);
+      console.log(new Date(data.start).getDate());
+    }
     const startDate = new Date(data.start).getDate();
     const endDate = new Date(data.end).getDate();
-    if (startDate === day || endDate === day) return data;
+    if (day >= startDate && day <= endDate) return data;
+  });
+  console.log(day);
+  console.log(events);
+
+  events.sort((a, b) => {
+    if (a.isLongDay && !b.isLongDay) return -1;
+    if (!a.isLongDay && b.isLongDay) return 1;
+    if (a.isLongDay && b.isLongDay) {
+      const aDiffTime = new Date(a.end).getTime() - new Date(a.start).getTime();
+      const bDiffTime = new Date(b.end).getTime() - new Date(b.start).getTime();
+      return aDiffTime > bDiffTime ? -1 : 1;
+    }
+
+    if (a.isAllDay && !b.isAllDay) return -1;
+    if (!a.isAllDay && b.isAllDay) return 1;
+
+    const startTimeA = new Date(a.start).getTime();
+    const startTimeB = new Date(b.start).getTime();
+    return startTimeA - startTimeB;
   });
 
   return (
     <View style={styles.dateBox}>
       <Text style={styles.day}>{day}</Text>
       {events.map((event) => (
-        <Text style={styles.eventTitle}>{event.title}</Text>
+        <Text
+          key={event.id}
+          style={(styles.eventTitle, event.isLongDay && styles.longDayEvent)}
+        >
+          {event.title}
+        </Text>
       ))}
     </View>
   );
@@ -106,6 +134,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginBottom: 5,
   },
+  longDayEvent: {
+    backgroundColor: "#00bfff",
+  },
 });
 
 type EventData = {
@@ -113,6 +144,8 @@ type EventData = {
   title: string;
   start: string;
   end: string;
+  isAllDay: boolean;
+  isLongDay?: boolean;
 };
 
 const mockData: EventData[] = [
@@ -121,17 +154,36 @@ const mockData: EventData[] = [
     title: "予定1",
     start: "023-04-17T11:00:00+09:00",
     end: "2023-04-17T18:00:00+09:00",
+    isAllDay: false,
   },
   {
     id: "2ntasugrhfq8vs5al7s6od9tk0",
     title: "予定2",
     start: "2023-04-18T11:00:00+09:00",
     end: "2023-04-18T18:00:00+09:00",
+    isAllDay: false,
   },
   {
     id: "ek8nrmu8ha9r3rr9f0oheqmufk",
     title: "予定3",
     start: "2023-06-17T19:20:00+09:00",
     end: "2023-06-17T20:20:00+09:00",
+    isAllDay: false,
+  },
+  {
+    id: "ek8nrmu8ha9r3rr9f0oheqmufp",
+    title: "長い予定",
+    start: "2023-06-17T00:00:00.000+09:00",
+    end: "2023-06-25T00:00:00.000+09:00",
+    isAllDay: true,
+    isLongDay: true,
+  },
+  {
+    id: "ek8nrmu8ha9r3rr9f0oheqmufe",
+    title: "長い予定2",
+    start: "2023-06-20T00:00:00.000+09:00",
+    end: "2023-06-26T00:00:00.000+09:00",
+    isAllDay: true,
+    isLongDay: true,
   },
 ];
