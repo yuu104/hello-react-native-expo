@@ -11,6 +11,7 @@ export default function ReactNativeCalendar() {
         showSixWeeks
         style={styles.calendar}
         dayComponent={DayComponent}
+        enableSwipeMonths={true}
         theme={{
           "stylesheet.calendar.main": {
             monthView: {
@@ -49,16 +50,10 @@ const DayComponent: ComponentType<
   const day = date.day;
 
   const events = mockData.filter((data) => {
-    if (data.id === "ek8nrmu8ha9r3rr9f0oheqmufp") {
-      console.log(data.start);
-      console.log(new Date(data.start).getDate());
-    }
     const startDate = new Date(data.start).getDate();
     const endDate = new Date(data.end).getDate();
     if (day >= startDate && day <= endDate) return data;
   });
-  console.log(day);
-  console.log(events);
 
   events.sort((a, b) => {
     if (a.isLongDay && !b.isLongDay) return -1;
