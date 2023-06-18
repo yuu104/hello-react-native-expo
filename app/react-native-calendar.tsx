@@ -1,17 +1,29 @@
 import { Link } from "expo-router";
-import { ComponentType } from "react";
+import { FC, useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { Calendar, DateData } from "react-native-calendars";
-import { DayProps } from "react-native-calendars/src/calendar/day";
+import { EventData, useGetMonthlyEvents } from "../hooks/useGetMonthlyEvents";
 
 export default function ReactNativeCalendar() {
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const handleMonthChange = (date: DateData) => {
+    setMonth(date.month);
+  };
+
+  const { monthlyEvents } = useGetMonthlyEvents(month);
+
   return (
     <SafeAreaView style={styles.container}>
       <Calendar
         showSixWeeks
         style={styles.calendar}
-        dayComponent={DayComponent}
+        dayComponent={({ date }) => {
+          return date ? (
+            <DayComponent date={date} monthlyEvents={monthlyEvents} />
+          ) : null;
+        }}
         enableSwipeMonths={true}
+        onMonthChange={handleMonthChange}
         theme={{
           "stylesheet.calendar.main": {
             monthView: {
@@ -42,17 +54,34 @@ export default function ReactNativeCalendar() {
   );
 }
 
-const DayComponent: ComponentType<
-  DayProps & { date?: DateData | undefined }
-> = ({ date, state }) => {
+type DayComponentPops = {
+  date: DateData;
+  monthlyEvents: EventData[];
+};
+
+const DayComponent: FC<DayComponentPops> = ({ date, monthlyEvents }) => {
   if (!date) return null;
 
   const day = date.day;
+  const month = date.month;
 
-  const events = mockData.filter((data) => {
-    const startDate = new Date(data.start).getDate();
-    const endDate = new Date(data.end).getDate();
-    if (day >= startDate && day <= endDate) return data;
+  const events = monthlyEvents.filter((event) => {
+    const startMonth = new Date(event.start).getMonth() + 1;
+    const startDate = new Date(event.start).getDate();
+    const endMonth = new Date(event.end).getMonth() + 1;
+    const endDate = new Date(event.end).getDate();
+
+    if (startMonth === endMonth && day >= startDate && day <= endDate)
+      return true;
+    if (startMonth !== endMonth) {
+      if (month === startMonth && day >= startDate) return true;
+      if (month === endMonth && day <= endDate) return true;
+      if (startMonth > endMonth) {
+        if ((month > startMonth && month <= 12) || month < endMonth) {
+          return true;
+        }
+      }
+    }
   });
 
   events.sort((a, b) => {
@@ -79,6 +108,7 @@ const DayComponent: ComponentType<
         <Text
           key={event.id}
           style={(styles.eventTitle, event.isLongDay && styles.longDayEvent)}
+          numberOfLines={1}
         >
           {event.title}
         </Text>
@@ -105,7 +135,8 @@ const styles = StyleSheet.create({
     borderColor: "#d3d3d3",
   },
   dateBox: {
-    width: "100%",
+    // width: "110%",
+    // zIndex: 100,
   },
   linkContainer: {
     flex: 1,
@@ -133,52 +164,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#00bfff",
   },
 });
-
-type EventData = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-  isAllDay: boolean;
-  isLongDay?: boolean;
-};
-
-const mockData: EventData[] = [
-  {
-    id: "eu48cnhjcke474vjvs6kib474g",
-    title: "予定1",
-    start: "023-04-17T11:00:00+09:00",
-    end: "2023-04-17T18:00:00+09:00",
-    isAllDay: false,
-  },
-  {
-    id: "2ntasugrhfq8vs5al7s6od9tk0",
-    title: "予定2",
-    start: "2023-04-18T11:00:00+09:00",
-    end: "2023-04-18T18:00:00+09:00",
-    isAllDay: false,
-  },
-  {
-    id: "ek8nrmu8ha9r3rr9f0oheqmufk",
-    title: "予定3",
-    start: "2023-06-17T19:20:00+09:00",
-    end: "2023-06-17T20:20:00+09:00",
-    isAllDay: false,
-  },
-  {
-    id: "ek8nrmu8ha9r3rr9f0oheqmufp",
-    title: "長い予定",
-    start: "2023-06-17T00:00:00.000+09:00",
-    end: "2023-06-25T00:00:00.000+09:00",
-    isAllDay: true,
-    isLongDay: true,
-  },
-  {
-    id: "ek8nrmu8ha9r3rr9f0oheqmufe",
-    title: "長い予定2",
-    start: "2023-06-20T00:00:00.000+09:00",
-    end: "2023-06-26T00:00:00.000+09:00",
-    isAllDay: true,
-    isLongDay: true,
-  },
-];
