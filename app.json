@@ -25,6 +25,7 @@
     "web": {
       "scheme": "metro",
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "jsEngine": "jsc"
   }
 }
