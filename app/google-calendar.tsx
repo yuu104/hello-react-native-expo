@@ -24,18 +24,27 @@ export default function App() {
     const timeMax = new Date(2023, month, 0, 23, 59, 59).toISOString();
 
     try {
-      const response = await fetch(
-        `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${timeMin}&timeMax=${timeMax}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      setEvents(data.items);
+      const eventList = [];
+      let pageToken = "";
+      while (true) {
+        console.log("リクエスト");
+        const response = await fetch(
+          `https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=${2500}${
+            pageToken && `&pageToken=${pageToken}`
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        eventList.push(...data.items);
+        pageToken = data.nextPageToken;
+        if (!pageToken) break;
+      }
+      setEvents(eventList);
     } catch (err) {
       console.error(err);
     }
@@ -63,12 +72,12 @@ export default function App() {
             title="Googleカレンダーと連携する"
             onPress={getGoogleCalendarEvents}
           />
-          {!!events.length &&
+          {/* {!!events.length &&
             events.map((item: any) => (
               <Text key={item.id} style={styles.text}>
                 {item.summary}
               </Text>
-            ))}
+            ))} */}
         </View>
       )}
       <Link href="/home" style={styles.link}>
