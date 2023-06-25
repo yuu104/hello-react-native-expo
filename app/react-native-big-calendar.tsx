@@ -1,6 +1,7 @@
 import { SafeAreaView, StyleSheet, Button } from "react-native";
 import { Calendar, ICalendarEventBase } from "react-native-big-calendar";
 import { mockEvents } from "../mocks/mockEvents";
+import { Link } from "expo-router";
 
 export default function ReactNativeBigCalendar() {
   const eventsData: ICalendarEventBase[] = mockEvents.map((mockEvent) => {
@@ -20,6 +21,9 @@ export default function ReactNativeBigCalendar() {
         mode="month"
         onPressEvent={(e) => console.log(e)}
       />
+      <Link href="/home" style={styles.link}>
+        ホームへ戻る
+      </Link>
     </SafeAreaView>
   );
 }
