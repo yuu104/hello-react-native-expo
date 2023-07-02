@@ -73,7 +73,7 @@ const alignEvents = (events: EventData[], firstDate: Date, lastDate: Date) => {
     }
   }
 
-  const item = alignedEvents.map((weeklyEvents) => {
+  return alignedEvents.map((weeklyEvents) => {
     const longDayEvents: (EventData & { index?: number })[] = [];
     weeklyEvents.forEach((daylyEvents) => {
       daylyEvents.forEach((event) => {
@@ -81,7 +81,7 @@ const alignEvents = (events: EventData[], firstDate: Date, lastDate: Date) => {
           new Date(event.start).getDate() !== new Date(event.end).getDate() &&
           !longDayEvents.some((obj) => obj.id === event.id)
         ) {
-          longDayEvents.push(event);
+          longDayEvents.push({ ...event });
         }
       });
     });
@@ -192,8 +192,6 @@ const alignEvents = (events: EventData[], firstDate: Date, lastDate: Date) => {
 
     return weeklyItem;
   });
-
-  return item;
 };
 
 const getDaylyEvents = (events: EventData[], targetDate: Date) => {
