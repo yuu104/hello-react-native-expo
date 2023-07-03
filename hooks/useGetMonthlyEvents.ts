@@ -12,9 +12,9 @@ export const useGetMonthlyEvents = (
   const monthLastDate = new Date(targetYear, targetMonth + 1, 1);
   monthLastDate.setDate(0);
 
-  const firstDate = new Date(targetYear, targetMonth, 1);
+  const firstDate = new Date(targetYear, targetMonth, 1); // カレンダーに表示する最初の日付
   firstDate.setDate(-monthFirstDate.getDay() + 1);
-  const lastDate = new Date(targetYear, targetMonth);
+  const lastDate = new Date(targetYear, targetMonth); // カレンダーに表示する最後の日付
   lastDate.setDate(monthLastDate.getDate() + 6 - monthLastDate.getDay());
   const moreDateNum =
     42 - (lastDate.getTime() - firstDate.getTime()) / 86400000;
