@@ -14,6 +14,9 @@ export default function Home() {
       <Link href="/react-native-big-calendar" style={styles.link}>
         React Native Big Calendar
       </Link>
+      <Link href="/sample" style={styles.link}>
+        Sample
+      </Link>
     </SafeAreaView>
   );
 }
