@@ -17,6 +17,9 @@ export default function Home() {
       <Link href="/sample" style={styles.link}>
         Sample
       </Link>
+      <Link href="/calendar" style={styles.link}>
+        Calendar
+      </Link>
     </SafeAreaView>
   );
 }
