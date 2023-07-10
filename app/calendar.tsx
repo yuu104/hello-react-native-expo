@@ -1,10 +1,15 @@
 import React, { FC } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  LayoutChangeEvent,
+} from "react-native";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useGetMonthlyEvents } from "../hooks/useGetMonthlyEvents";
-import { EventData } from "../mocks/mockEvents";
 
 export default function CalendarPage() {
   return (
@@ -29,6 +34,8 @@ const Calendar: FC = () => {
   const { monthlyEvents, firstDate, lastDate } =
     useGetMonthlyEvents(displayDateData);
 
+  const [eventMatrixWidth, setEventMatrixWidth] = useState(0);
+
   const handleDisplayDateDataChange = (a: "prev" | "next") => {
     setDisplayDateData((prevState) => {
       const year = prevState.getFullYear();
@@ -38,6 +45,32 @@ const Calendar: FC = () => {
         : new Date(year, month + 1, 1);
     });
   };
+
+  const calculateLongDayWidth = (targetDate: Date, endDate: Date) => {
+    const diff = 6 - targetDate.getDay();
+    const saturdayDate = new Date(
+      targetDate.getFullYear(),
+      targetDate.getMonth(),
+      targetDate.getDate() + diff
+    );
+
+    let numOfDays: number;
+
+    if (saturdayDate > endDate) {
+      numOfDays = endDate.getDay() - targetDate.getDay() + 1;
+    } else {
+      numOfDays = 7 - targetDate.getDay();
+    }
+
+    return ((eventMatrixWidth - 6) / 7) * numOfDays + (numOfDays - 1);
+  };
+
+  const onLayoutEventMatrix = (e: LayoutChangeEvent) => {
+    const { width } = e.nativeEvent.layout;
+    setEventMatrixWidth(width);
+  };
+
+  console.log(monthlyEvents);
 
   return (
     <View style={calendarStyles.container}>
@@ -73,7 +106,7 @@ const Calendar: FC = () => {
           土
         </Text>
       </View>
-      <View style={calendarStyles.eventMatrix}>
+      <View style={calendarStyles.eventMatrix} onLayout={onLayoutEventMatrix}>
         {monthlyEvents.map((weeklyEvents, weeklyIndex) => (
           <View key={weeklyIndex} style={calendarStyles.weeklyEvents}>
             {weeklyEvents.map((daylyEvents, daylyIndex) => (
@@ -81,6 +114,7 @@ const Calendar: FC = () => {
                 key={daylyIndex}
                 style={[
                   calendarStyles.daylyEvents,
+                  { zIndex: 7 - daylyIndex },
                   daylyIndex === 6 && { borderRightWidth: 0 },
                 ]}
               >
@@ -89,7 +123,7 @@ const Calendar: FC = () => {
                     calendarStyles.dateLabelLayout,
                     isEqualDay(
                       new Date(),
-                      getDate(firstDate, weeklyIndex, daylyIndex)
+                      getTargetDate(firstDate, weeklyIndex, daylyIndex)
                     ) && {
                       backgroundColor: "#37BFD2",
                       borderWidth: 1,
@@ -105,33 +139,87 @@ const Calendar: FC = () => {
                       ,
                       isEqualDay(
                         new Date(),
-                        getDate(firstDate, weeklyIndex, daylyIndex)
+                        getTargetDate(firstDate, weeklyIndex, daylyIndex)
                       ) && { color: "#fff" },
                     ]}
                   >
-                    {getDate(firstDate, weeklyIndex, daylyIndex).getDate()}
+                    {getTargetDate(
+                      firstDate,
+                      weeklyIndex,
+                      daylyIndex
+                    ).getDate()}
                   </Text>
                 </View>
-                {/* <View>
-                  {daylyEvents.map((event) => (
-                    <View key={event.id}>
-                      <Text
-                        style={[
-                          !isEqualDay(
+                <View
+                  style={[
+                    calendarStyles.eventsLayout,
+                    isEqualDay(
+                      new Date(),
+                      getTargetDate(firstDate, weeklyIndex, daylyIndex)
+                    ) && { backgroundColor: "#F3F6F7" },
+                  ]}
+                >
+                  {daylyEvents.map((event, eventIndex) => (
+                    <View key={event.id} style={calendarStyles.eventLayout}>
+                      {eventIndex === 3 && event.start ? (
+                        <View>
+                          <Text style={calendarStyles.event}>他2件</Text>
+                        </View>
+                      ) : eventIndex < 3 ? (
+                        <>
+                          <View>
+                            <Text
+                              style={[
+                                (!isEqualDay(
+                                  new Date(event.start),
+                                  new Date(event.end)
+                                ) ||
+                                  !event.start) && { opacity: 0 },
+                                calendarStyles.event,
+                              ]}
+                            >
+                              {event.title}
+                            </Text>
+                          </View>
+                          {!isEqualDay(
                             new Date(event.start),
                             new Date(event.end)
-                          ) && { opacity: 0 },
-                        ]}
-                      >
-                        {event.title}
-                      </Text>
-                      {!isEqualDay(
-                        new Date(event.start),
-                        new Date(event.end)
-                      ) && <Text>{event.title}</Text>}
+                          ) &&
+                            event.start &&
+                            (daylyIndex === 0 ||
+                              isEqualDay(
+                                getTargetDate(
+                                  firstDate,
+                                  weeklyIndex,
+                                  daylyIndex
+                                ),
+                                new Date(event.start)
+                              )) && (
+                              <View
+                                style={[
+                                  calendarStyles.longEventLayout,
+                                  {
+                                    width: calculateLongDayWidth(
+                                      getTargetDate(
+                                        firstDate,
+                                        weeklyIndex,
+                                        daylyIndex
+                                      ),
+                                      new Date(event.end)
+                                    ),
+                                  },
+                                ]}
+                              >
+                                <Text style={calendarStyles.longEvent}>
+                                  {event.title}
+                                </Text>
+                              </View>
+                            )}
+                        </>
+                      ) : null}
                     </View>
                   ))}
-                </View> */}
+                </View>
               </View>
             ))}
           </View>
@@ -141,7 +229,11 @@ const Calendar: FC = () => {
   );
 };
 
-const getDate = (firstDate: Date, weeklyIndex: number, daylyIndex: number) => {
+const getTargetDate = (
+  firstDate: Date,
+  weeklyIndex: number,
+  daylyIndex: number
+) => {
   return new Date(
     firstDate.getFullYear(),
     firstDate.getMonth(),
@@ -156,16 +248,6 @@ const isEqualDay = (date1: Date, date2: Date) => {
     date1.getDate() === date2.getDate()
   );
 };
-
-// const isLongDay = (event: EventData) => {
-//   const start = new Date(event.start);
-//   const end = new Date(event.end);
-//   return (
-//     start.getFullYear() === end.getFullYear() &&
-//     start.getMonth() === end.getMonth() &&
-//     start.getDate() === end.getDate()
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {
@@ -237,15 +319,36 @@ const calendarStyles = StyleSheet.create({
     borderColor: "#E0E7EC",
   },
   dateLabelLayout: {
+    justifyContent: "center",
+    alignItems: "center",
     borderBottomWidth: 1,
     borderColor: "#E0E7EC",
     height: 16,
-    justifyContent: "center",
-    alignItems: "center",
   },
   dateLabel: {
     fontSize: 10,
     fontWeight: "bold",
     color: "#394959",
+  },
+  eventsLayout: {
+    flex: 1,
+    position: "relative",
+    paddingTop: 3,
+  },
+  eventLayout: {
+    marginBottom: 2,
+  },
+  event: {
+    fontSize: 10,
+    color: "#555555",
+  },
+  longEventLayout: {
+    position: "absolute",
+    left: 0,
+    backgroundColor: "#4CAF50",
+  },
+  longEvent: {
+    fontSize: 10,
+    color: "#fff",
   },
 });
